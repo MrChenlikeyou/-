@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .app{
+            width: 800px;
+            /* height: 700px; */
+            margin: 150px auto;
+            position: relative;
+            border: 1px solid black;
+        }
+        .att{
+            position: relative;
+            height: 400px;
+            
+        }
+        img{
+            width: 800px;
+            height: 400px;
+            position: absolute;
+            left:0;
+            top: 0;
+            opacity: 0;
+            transition:.6s;
+            z-index: 9;
+            
+        }
+        .aoo div{
+            height: 100%;
+            width: 20%;
+            background-color: black;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            
+        }
+        .aoo div:hover,.aoo div.act{
+            background-color: orange;
+            color: black;
+        }
+        .aoo{
+            color: white;
+            line-height: 50px;
+            height: 50px;
+            background-color: black;
+            display: flex;
+            position: relative;
+        }
+        
+        .left{
+            position: absolute;
+            top:50%;
+            left: 0;
+            width: 20px;
+            height: 60px;
+            border: 1px solid black;
+            line-height: 60px;
+            text-align: center;
+            background-color: black;
+            color: white;
+            opacity: .6;
+            user-select: none;
+            z-index: 10;
+
+        }
+        .right{
+            position: absolute;
+            top:50%;
+            right: 0;
+            width: 20px;
+            height: 60px;
+            border: 1px solid black;
+            line-height: 60px;
+            text-align: center;
+            background-color: black;
+            color: white;
+            opacity: .6;
+            user-select: none;
+            z-index: 10;
+        }
+        .left:hover,.right:hover{
+            opacity: 1;
+        }
+        #box{
+            position: absolute;
+            top: 40%;
+            height:100px ;
+            width: 600px;
+            left: 100px;
+            border: 1px solid black;
+            line-height: 100px;
+            text-align: center;
+            background-color: black;
+            color: white;
+            opacity: .6;
+            user-select: none; 
+            font-size:20px;
+            z-index: 10;
+
+        }
+        .alt{
+            position: fixed;
+            background-image: url(./mayi6.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            filter: blur(3px);
+            left: 0;
+            top: 0;
+            transition: .6s;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="att">
+            <img src="./mayi6.png" alt="">
+            <img src="./mayi7.png" alt="">
+            <img src="./mayi8.png" alt="">
+            <img src="./mayi9.png" alt="">
+            <img src="./mayi10.png" alt="">
+            <div id="box"></div>
+        </div>
+        <div class="aoo">
+            <div>麻衣1</div>
+            <div>麻衣2</div>
+            <div>麻衣3</div>
+            <div>麻衣4</div>
+            <div>麻衣5</div>
+            
+        </div>
+            
+        <div class="right">➡</div>
+        <div class="left">⬅</div>
+
+        <div class="alt">
+        </div>
+        
+        </div>    
+        <script>
+            var flag=0;
+            var bwffFlag;
+            var app=document.querySelector('.app');
+            var imgDOM=document.querySelectorAll('img');
+            var aoo=document.querySelectorAll('.aoo div');
+            var left=document.querySelector('.left');
+            var right=document.querySelector('.right');
+            var alt=document.querySelector('.alt');
+
+            function qhtp(i){
+                buffFlag=flag;
+                flag=i;
+                imgDOM[buffFlag].style.opacity=0;
+                if(aoo[buffFlag].classList.contains('act')) aoo[buffFlag].classList.remove('act');
+                imgDOM[flag].style.opacity=1;
+                switch(flag){
+                    case 0:alt.style.backgroundImage="url(./mayi6.png)";break;
+                    case 1:alt.style.backgroundImage="url(./mayi7.png)";break;
+                    case 2:alt.style.backgroundImage="url(./mayi8.png)";break;
+                    case 3:alt.style.backgroundImage="url(./mayi9.png)";break;
+                    default:alt.style.backgroundImage="url(./mayi10.png)";break;
+                    
+                }
+                
+                aoo[flag].classList.add('act');
+            }
+
+            for(let i =0;i<aoo.length;i++){
+                aoo[i].onclick=function(){
+                    qhtp(i);
+                    
+                }
+
+            }
+
+            left.onclick=function(){
+                let fla=flag-1;
+                if(flag==0) fla=4;
+                qhtp(fla);
+                
+            }
+            right.onclick=function(){
+                let fla=flag+1;
+                if(flag==4) fla=0;
+                qhtp(fla);
+                
+            }
+            qhtp(0);
+            
+            
+            function lunbo(){
+                window.lunb=setInterval(function(){
+                    let fla=flag+1;
+                    if(fla>4)fla=0;
+                    qhtp(fla);
+                    
+                },2000)
+            }
+            lunbo();
+            app.onmouseover=function(){
+                clearInterval(window.lunb);
+            }
+            app.onmouseout=function(){
+                lunbo();
+            }
+            
+            let gqTime=new Date('2024-10-01 00:0:00');
+            function countDown(Time) {
+            let nowTime = new Date();
+            // 当前时间 距离目标时间的时间差  单位也还是毫秒
+            let time = Time - nowTime;
+            if (time <= 0) {
+                clearInterval(window.setTime);
+                alert("国庆已经开始！");
+                return "倒计时结束";
+            }
+            // mubnTime.getTime() - nowTime.getTime();
+            // 计算时分秒
+            let day = parseInt(time / 1000 / 60 / 60 / 24);
+            let hour = parseInt(time / 1000 / 60 / 60 % 24);
+            let minute = parseInt(time / 1000 / 60 % 60);
+            let s = parseInt(time / 1000 % 60);
+            let ms = parseInt(time % 1000);
+
+            document.querySelector('#box').innerHTML =
+            `距离2024年10月1日 <b>国庆假期</b> 还有${day}天${hour}小时${minute}分钟${s}秒 ${ms}毫秒`;
+        }
+ 
+ 
+        // 钩子
+        window.onload = function () {
+            window.setTime = setInterval(function () {
+                countDown(gqTime);
+            }, 10)
+        }
+
+        </script>
+    
+
+
+    
+</body>
+</html>
+
+<!-- z-index是针对什么而言？ -->
